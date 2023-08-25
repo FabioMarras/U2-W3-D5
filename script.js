@@ -64,15 +64,15 @@ window.onload = async () => {
       responseData.forEach((phone) => {
         const col = document.createElement("div");
         col.innerHTML = `
-                <div dataPhoneId="${phone._id}" class="card mb-2" >
-                  <img src="${phone.imageUrl}" class="card-img-top" alt="..." style="height: 20%; width:auto;>
-                  <div class="card-body">
-                    <h5 class="card-title">${phone.name}</h5>
-                    <p> ${phone.description} </p>
-                    <p class="card-text">${phone.price + " Euro"}</p>
-                    <a href="det.html?phoneid=${phone._id}" class="btn btn-primary removeBtn">DETTAGLI</a>
-                  </div>
-                </div>
+        <div dataPhoneId="${phone._id}" class="card mb-2" >
+        <img src="${phone.imageUrl}" class="card-img-top" alt="..." style="height: 20%; width:auto;>
+        <div class="card-body">
+          <h5 class="card-title">${phone.name}</h5>
+          <p> ${phone.description} </p>
+          <p class="card-text">${phone.price + " Euro"}</p>
+          <a href="det.html?phoneid=${phone._id}" class="btn btn-primary removeBtn">DETTAGLI</a>
+        </div>
+      </div>
               `;
 
         row.appendChild(col);
