@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dettagli</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div id="imgContainer" class="container">
+      <div id="containerHtml"></div>
+    </div>
+    <script>
+      const URL = "https://striveschool-api.herokuapp.com/api/product/";
+
+      const eventId = new URLSearchParams(window.location.search).get("phoneid");
+      console.log("il mio id: ", eventId);
+
+      window.onload = async () => {
+        const resp = await fetch(URL + eventId, {
+          method: "GET",
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGU4NTU5NGMwMzRmZjAwMTQwM2Y0ZGQiLCJpYXQiOjE2OTI5NDc4NjEsImV4cCI6MTY5NDE1NzQ2MX0.dABA0GwOoSSXdKiHNIIQOt0TmSdoC5oVd09Mr5hMl-U",
+          },
+        });
+
+        const eventObj = await resp.json();
+
+        const { name, description, price, _id, imageUrl } = eventObj;
+
+        const container = document.getElementById("containerHtml");
+        container.innerHTML = `<div class="d-flex "> 
+          <div>
+                    <h1 class="fw-bolder">${name}</h1>
+                    <h2>${description}</h2>
+                    <h5>Prezzo: ${price} Euro </h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item px-2"><strong>id:</strong> ${_id}</li>
+                    </ul>
+                    </div>
+                    <div>
+                    <img src="${imageUrl}" alt="">
+                    <button type="button" class="btn btn-dark"><a href="/index.html">TORNA INDIETRO</a> </button>
+                  </div>
+                    </div>`;
+      };
+    </script>
+  </body>
+</html>
