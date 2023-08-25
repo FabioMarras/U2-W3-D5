@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Back-office</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">Phone-Shop</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <main class="container">
+      <form class="d-flex flex-column">
+        <input id="event-name" class="rounded-pill m-2" type="text" placeholder="Name" />
+        <input id="event-description" class="rounded-pill m-2" type="text" placeholder="description" />
+        <input id="event-price" class="rounded-pill m-2" type="text" placeholder="price" />
+        <input id="event-brand" class="rounded-pill m-2" type="text" placeholder="brand" />
+        <input id="image-selector" class="rounded-pill m-2" type="text" placeholder="image" />
+      </form>
+      <button id="buttonModifica" class="btc">MODIFICA</button>
+      <button id="buttonElimina" class="btc">ELIMINA</button>
+    </main>
+    <script src="script.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const eventId = new URLSearchParams(window.location.search).get("phoneid");
+      console.log("il mio id è: ", eventId);
+
+      const updateBtn = document.getElementById("buttonModifica");
+
+      updateBtn.addEventListener("click", async function () {
+        const idToUpdate = eventId;
+        const nameValue = nameInput.value;
+        const descriptionValue = descriptionInput.value;
+        const priceValue = priceInput.value;
+        const brandValue = brandInput.value;
+        const imageValue = imageInput.value;
+
+        const updatedData = {
+          name: nameValue,
+          description: descriptionValue,
+          price: priceValue,
+          brand: brandValue,
+          imageUrl: imageValue,
+        };
+        console.log(updatedData);
+
+        try {
+          const response = await fetch(`${URL}/${idToUpdate}`, {
+            method: "PUT",
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGU4NTU5NGMwMzRmZjAwMTQwM2Y0ZGQiLCJpYXQiOjE2OTI5NDc4NjEsImV4cCI6MTY5NDE1NzQ2MX0.dABA0GwOoSSXdKiHNIIQOt0TmSdoC5oVd09Mr5hMl-U",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedData),
+          });
+
+          if (response.ok) {
+            const responseData = await response.json();
+            console.log("Dati aggiornati:", responseData);
+          } else {
+            console.error("Errore nella richiesta di aggiornamento:", response.status);
+          }
+        } catch (error) {
+          console.error("Errore durante la richiesta di aggiornamento:", error);
+        }
+      });
+    </script>
+
+    <script>
+      const deleteBtn = document.getElementById("buttonElimina");
+
+      deleteBtn.addEventListener("click", async function () {
+        const idToDelete = eventId;
+        console.log("ID dell'oggetto da eliminare:", idToDelete);
+
+        try {
+          const response = await fetch(`${URL}/${idToDelete}`, {
+            method: "DELETE",
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGU4NTU5NGMwMzRmZjAwMTQwM2Y0ZGQiLCJpYXQiOjE2OTI5NDc4NjEsImV4cCI6MTY5NDE1NzQ2MX0.dABA0GwOoSSXdKiHNIIQOt0TmSdoC5oVd09Mr5hMl-U",
+            },
+          });
+
+          if (response.ok) {
+            console.log("Oggetto eliminato con successo.");
+          } else {
+            console.error("Errore nella richiesta di eliminazione:", response.status);
+          }
+        } catch (error) {
+          console.error("Errore durante la richiesta di eliminazione:", error);
+        }
+      });
+    </script>
+  </body>
+</html>

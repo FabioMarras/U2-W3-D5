@@ -71,6 +71,7 @@ window.onload = async () => {
           <p> ${phone.description} </p>
           <p class="card-text">${phone.price + " Euro"}</p>
           <a href="det.html?phoneid=${phone._id}" class="btn btn-primary removeBtn">DETTAGLI</a>
+          <a href="modifica.html?phoneid=${phone._id}" class="btn mt-2 btn-primary removeBtn">MODIFICA/ELIMINA</a>
         </div>
       </div>
               `;
